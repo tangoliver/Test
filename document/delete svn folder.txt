@@ -1,0 +1,41 @@
+
+删除所有的.svn文件夹  
+
+
+       工作中要把一个项目迁移到另外的svn目录中，遇到一个问题，需要先把原来的.svn删除，然后再增加到新的svn中，开始手动删除，但是发现太耗时耗力了，网上搜了几种删除的方法，自己都试了一遍，总结了一下，写出来备忘。
+
+一、在Dos窗口中运行如下命令
+
+
+
+Dos代码 复制代码 收藏代码
+1.for /r <你项目的路径> %i in (.svn) do rd /s /q %i  
+
+
+ 
+
+二、将“Delete SVN Folders”操作添加到右击菜单中
+
+      建立一个文本文件，名称随意，后缀为.reg，内容如下：
+
+
+
+Text代码 复制代码 收藏代码
+1.Windows Registry Editor Version 5.00    
+2.  
+3.     
+4.  
+5.[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Folder\shell\DeleteSVN]     
+6.  
+7.@="Delete SVN Folders"   
+8.  
+9.     
+10.  
+11.[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Folder\shell\DeleteSVN\command]     
+12.  
+13.@="cmd.exe /c \"TITLE Removing SVN Folders in %1 && COLOR 9A && FOR /r \"%1\" %%f IN (.svn) DO RD /s /q \"%%f\" \""   
+
+
+ 
+
+保存之后，双击这个reg文件。成功后，在每一个文件夹上点击右键都会有一个“Delete SVN Folders”的选项，点击这个选项，即可删除这个文件夹下面所有的.svn文件夹    
